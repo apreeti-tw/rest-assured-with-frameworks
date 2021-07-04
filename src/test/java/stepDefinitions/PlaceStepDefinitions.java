@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import data.TestDataBuilder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -9,31 +10,24 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-import pojo.PostUsers;
 
 import static org.junit.Assert.assertEquals;
 
 public class PlaceStepDefinitions {
     RequestSpecification requestSpecification;
-    ResponseSpecification responseSpecification;
-    PostUsers postUser;
+    TestDataBuilder data = new TestDataBuilder();
     Response response;
 
     @Given("Add Place payload")
     public void add_place_payload() {
         requestSpecification = new RequestSpecBuilder().setBaseUri("https://reqres.in/").setContentType(ContentType.JSON).build();
-
-        postUser = new PostUsers();
-        postUser.setName("morpheus");
-        postUser.setJob("leader");
     }
 
     @When("User calls {string} api with post request")
     public void user_calls_api_with_post_request(String api) {
         response = RestAssured.given()
                 .spec(requestSpecification)
-                .body(postUser)
+                .body(data.getPostUserData())
                 .when()
                 .post("/api/users")
                 .then()
