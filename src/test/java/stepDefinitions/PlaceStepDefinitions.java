@@ -3,35 +3,52 @@ package stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+import pojo.PostUsers;
+
+import static org.junit.Assert.assertEquals;
 
 public class PlaceStepDefinitions {
+    RequestSpecification requestSpecification;
+    ResponseSpecification responseSpecification;
+    PostUsers postUser;
+    Response response;
+
     @Given("Add Place payload")
     public void add_place_payload() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        requestSpecification = new RequestSpecBuilder().setBaseUri("https://reqres.in/").setContentType(ContentType.JSON).build();
+
+        postUser = new PostUsers();
+        postUser.setName("morpheus");
+        postUser.setJob("leader");
     }
 
     @When("User calls {string} api with post request")
     public void user_calls_api_with_post_request(String api) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        response = RestAssured.given()
+                .spec(requestSpecification)
+                .body(postUser)
+                .when()
+                .post("/api/users")
+                .then()
+                .extract()
+                .response();
     }
 
-    @Then("API call should be successful with status code {string}")
-    public void api_call_should_be_successful_with_status_code(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("status message should contain {string}")
-    public void status_message_should_contain(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("API call should be successful with status code {int}")
+    public void api_call_should_be_successful_with_status_code(int statusCode) {
+        assertEquals(statusCode, response.statusCode());
     }
 
     @Then("{string} in status response should be {string}")
-    public void in_status_response_should_be(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void in_status_response_should_be(String param, String value) {
+        JsonPath jsonPath = new JsonPath(response.asString());
+        assertEquals(value, jsonPath.getString(param));
     }
 }
