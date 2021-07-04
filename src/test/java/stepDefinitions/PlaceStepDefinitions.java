@@ -1,12 +1,11 @@
 package stepDefinitions;
 
+import Utils.RequestResponseSpecBuilder;
 import data.TestDataBuilder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -20,7 +19,7 @@ public class PlaceStepDefinitions {
 
     @Given("Add Place payload")
     public void add_place_payload() {
-        requestSpecification = new RequestSpecBuilder().setBaseUri("https://reqres.in/").setContentType(ContentType.JSON).build();
+        requestSpecification = RequestResponseSpecBuilder.getRequestSpec();
     }
 
     @When("User calls {string} api with post request")
