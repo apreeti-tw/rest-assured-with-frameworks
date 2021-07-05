@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import Utils.Properties;
 import Utils.RequestResponseSpecBuilder;
 import data.TestDataBuilder;
 import io.cucumber.java.en.Given;
@@ -32,11 +33,11 @@ public class PlaceStepDefinitions {
     }
 
     @When("User calls ReqRes api with post request")
-    public void user_calls_api_with_post_request() {
+    public void user_calls_api_with_post_request() throws IOException {
 
         response = request
                     .when()
-                    .post("/api/users")
+                    .post(Properties.properties().getProperty("post_uri"))
                     .then()
                     .spec(responseSpecification)
                     .extract()
