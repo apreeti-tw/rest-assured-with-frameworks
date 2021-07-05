@@ -9,15 +9,24 @@ import io.restassured.parsing.Parser;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 
 public class RequestResponseSpecBuilder {
     private static RequestSpecification req;
     private static ResponseSpecification res;
+    private static PrintStream logFile;
+
+    static {
+        try {
+            logFile = FileHandler.getInstance().getLogFile();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static RequestSpecification getRequestSpec() throws IOException {
-        PrintStream logFile = FileHandler.getInstance().getLogFile();
         if(req == null){
             req = new RequestSpecBuilder()
                     .setBaseUri(Properties.getInstance().getProperty("base_url"))
