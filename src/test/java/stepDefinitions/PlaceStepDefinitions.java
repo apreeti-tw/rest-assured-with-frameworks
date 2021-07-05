@@ -33,7 +33,6 @@ public class PlaceStepDefinitions {
 
     @When("User calls ReqRes api with post request with {string} and {string}")
     public void user_calls_req_res_api_with_post_request_with_and(String name, String job) throws IOException {
-
         response = request
                     .body(data.getPostUserData(name, job))
                     .when()

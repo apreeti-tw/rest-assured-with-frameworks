@@ -10,7 +10,6 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 public class RequestResponseSpecBuilder {
     public static RequestSpecification getRequestSpec() throws IOException {
