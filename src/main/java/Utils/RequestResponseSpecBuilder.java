@@ -25,7 +25,6 @@ public class RequestResponseSpecBuilder {
     public static ResponseSpecification getResponseSpec(){
         return new ResponseSpecBuilder()
                 .expectContentType(ContentType.JSON)
-                .expectStatusCode(201)
                 .setDefaultParser(Parser.JSON)
                 .build();
     }
