@@ -5,11 +5,12 @@ import data.TestDataBuilder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+
+import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
@@ -22,7 +23,7 @@ public class PlaceStepDefinitions {
     Response response;
 
     @Given("Add Place payload")
-    public void add_place_payload() {
+    public void add_place_payload() throws IOException {
         requestSpecification = RequestResponseSpecBuilder.getRequestSpec();
         responseSpecification = RequestResponseSpecBuilder.getResponseSpec();
         request = given()
@@ -30,8 +31,8 @@ public class PlaceStepDefinitions {
                     .body(data.getPostUserData());
     }
 
-    @When("User calls {string} api with post request")
-    public void user_calls_api_with_post_request(String api) {
+    @When("User calls ReqRes api with post request")
+    public void user_calls_api_with_post_request() {
 
         response = request
                     .when()
