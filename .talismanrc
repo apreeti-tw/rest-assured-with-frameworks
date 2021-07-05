@@ -1,0 +1,5 @@
+fileignoreconfig:
+- filename: log.txt
+  checksum: 83c194bc8052314d335490de7f9f3ba76d8f535c848e3e88ea4b8e189452d79a
+  ignore_detectors: []
+scopeconfig: []
