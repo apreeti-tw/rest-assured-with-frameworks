@@ -10,21 +10,32 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 import java.io.IOException;
+import java.io.PrintStream;
 
 public class RequestResponseSpecBuilder {
+    private static RequestSpecification req;
+    private static ResponseSpecification res;
+
     public static RequestSpecification getRequestSpec() throws IOException {
-        return new RequestSpecBuilder()
-                .setBaseUri(Properties.getInstance().getProperty("base_url"))
-                .setContentType(ContentType.JSON)
-                .addFilter(RequestLoggingFilter.logRequestTo(FileHandler.getInstance().getLogFile()))
-                .addFilter(ResponseLoggingFilter.logResponseTo(FileHandler.getInstance().getLogFile()))
-                .build();
+        PrintStream logFile = FileHandler.getInstance().getLogFile();
+        if(req == null){
+            req = new RequestSpecBuilder()
+                    .setBaseUri(Properties.getInstance().getProperty("base_url"))
+                    .setContentType(ContentType.JSON)
+                    .addFilter(RequestLoggingFilter.logRequestTo(logFile))
+                    .addFilter(ResponseLoggingFilter.logResponseTo(logFile))
+                    .build();
+        }
+        return req;
     }
 
     public static ResponseSpecification getResponseSpec(){
-        return new ResponseSpecBuilder()
-                .expectContentType(ContentType.JSON)
-                .setDefaultParser(Parser.JSON)
-                .build();
+        if(res == null){
+            res = new ResponseSpecBuilder()
+                    .expectContentType(ContentType.JSON)
+                    .setDefaultParser(Parser.JSON)
+                    .build();
+        }
+        return res;
     }
 }
