@@ -28,14 +28,14 @@ public class PlaceStepDefinitions {
         requestSpecification = RequestResponseSpecBuilder.getRequestSpec();
         responseSpecification = RequestResponseSpecBuilder.getResponseSpec();
         request = given()
-                    .spec(requestSpecification)
-                    .body(data.getPostUserData());
+                    .spec(requestSpecification);
     }
 
-    @When("User calls ReqRes api with post request")
-    public void user_calls_api_with_post_request() throws IOException {
+    @When("User calls ReqRes api with post request with {string} and {string}")
+    public void user_calls_req_res_api_with_post_request_with_and(String name, String job) throws IOException {
 
         response = request
+                    .body(data.getPostUserData(name, job))
                     .when()
                     .post(Properties.getInstance().getProperty("post_uri"))
                     .then()
