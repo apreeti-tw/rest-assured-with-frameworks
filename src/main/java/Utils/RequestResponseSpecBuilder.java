@@ -15,10 +15,10 @@ import java.io.PrintStream;
 public class RequestResponseSpecBuilder {
     public static RequestSpecification getRequestSpec() throws IOException {
         return new RequestSpecBuilder()
-                .setBaseUri(Properties.properties().getProperty("base_url"))
+                .setBaseUri(Properties.getInstance().getProperty("base_url"))
                 .setContentType(ContentType.JSON)
-                .addFilter(RequestLoggingFilter.logRequestTo(new PrintStream(System.getProperty("user.dir")+"/log.txt")))
-                .addFilter(ResponseLoggingFilter.logResponseTo(new PrintStream(System.getProperty("user.dir")+"/log.txt")))
+                .addFilter(RequestLoggingFilter.logRequestTo(FileHandler.getInstance().getLogFile()))
+                .addFilter(ResponseLoggingFilter.logResponseTo(FileHandler.getInstance().getLogFile()))
                 .build();
     }
 

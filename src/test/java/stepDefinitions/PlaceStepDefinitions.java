@@ -37,7 +37,7 @@ public class PlaceStepDefinitions {
 
         response = request
                     .when()
-                    .post(Properties.properties().getProperty("post_uri"))
+                    .post(Properties.getInstance().getProperty("post_uri"))
                     .then()
                     .spec(responseSpecification)
                     .extract()
