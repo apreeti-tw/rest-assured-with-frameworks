@@ -37,15 +37,15 @@ public class PlaceStepDefinitions {
         response = request
                     .body(data.getPostUserData(name, job))
                     .when()
-                    .post(APIResources.valueOf(requestType).getResource())
-                    .then()
-                    .spec(responseSpecification)
-                    .extract()
-                    .response();
+                    .post(APIResources.valueOf(requestType).getResource());
     }
 
     @Then("API call should be successful with status code {int}")
     public void api_call_should_be_successful_with_status_code(int statusCode) {
+        response.then()
+                .spec(responseSpecification)
+                .extract()
+                .response();
         assertEquals(statusCode, response.statusCode());
     }
 
