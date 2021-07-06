@@ -3,6 +3,7 @@ package stepDefinitions;
 import Utils.Properties;
 import Utils.RequestResponseSpecBuilder;
 import data.TestDataBuilder;
+import enums.APIResources;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -31,12 +32,12 @@ public class PlaceStepDefinitions {
                     .spec(requestSpecification);
     }
 
-    @When("User calls ReqRes api with post request with {string} and {string}")
-    public void user_calls_req_res_api_with_post_request_with_and(String name, String job) throws IOException {
+    @When("User calls ReqRes api with {string} with {string} and {string}")
+    public void user_calls_req_res_api_with_with_and(String requestType, String name, String job) throws IOException {
         response = request
                     .body(data.getPostUserData(name, job))
                     .when()
-                    .post(Properties.getInstance().getProperty("post_uri"))
+                    .post(APIResources.valueOf(requestType).getResource())
                     .then()
                     .spec(responseSpecification)
                     .extract()
