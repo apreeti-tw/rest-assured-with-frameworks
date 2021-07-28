@@ -24,7 +24,7 @@ public class PlaceStepDefinitions {
     Response response;
     String id;
 
-    @Given("Add Place payload")
+    @Given("Add User payload")
     public void add_place_payload() throws IOException {
         requestSpecification = RequestResponseSpecBuilder.getRequestSpec();
         responseSpecification = RequestResponseSpecBuilder.getResponseSpec();

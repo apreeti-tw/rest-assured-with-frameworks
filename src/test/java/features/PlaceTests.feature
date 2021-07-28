@@ -1,7 +1,7 @@
   Feature: Validate request/response to Users API
 
     Scenario Outline: Should be able to add a user
-      Given Add USer payload
+      Given Add User payload
       When User calls ReqRes api with "POST_USER_REQUEST" with "<name>" and "<job>"
       Then API call should be successful with status code 201
       And "name" in status response should be "<name>"
